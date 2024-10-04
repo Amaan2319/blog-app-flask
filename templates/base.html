@@ -39,14 +39,14 @@
                             <a href="{{url_for('dashboard')}}" class="nav-link">Dashboard</a>
                         </li>
                         {% endif %}
+                        <li class="nav-item">
+                            {% if name == "guest" %}  <!-- Show Login button when user is a guest -->
+                            <a class="nav-link" href="{{ url_for('login') }}">Login</a>
+                            {% else %}  <!-- Show Logout button when user is logged in -->
+                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                            {% endif %}
+                        </li>
                     </ul>
-                    <div class="mx-3">
-                        {% if name == "guest" %}  <!-- Show Login button when user is a guest -->
-                        <a class="btn btn-danger" href="{{ url_for('login') }}">Login</a>
-                        {% else %}  <!-- Show Logout button when user is logged in -->
-                        <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
-                        {% endif %}
-                    </div>
                 </div>
             </div>
         </nav>
