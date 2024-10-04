@@ -7,34 +7,42 @@
 
 <div class="container d-flex align-items-center justify-content-center vh-100">
     <form class="border p-4 rounded shadow" action="{{ url_for('login') }}" method="POST" style="width: 400px;">
+        {{ form.hidden_tag() }} <!-- CSRF token -->
         <h2 class="text-center mb-4">Login</h2>
-        
-        <div class="form-group">
-            <label for="username"><b>Username</b></label>
-            <input type="text" class="form-control" placeholder="Enter Username" name="username" id="username" required>
-        </div>
 
         <div class="form-group">
-            <label for="password"><b>Password</b></label>
-            <input type="password" class="form-control" placeholder="Enter Password" name="password" id="password" required>
+            <label for="username"><b>Username</b></label>
+            {{ form.username(class="form-control", placeholder="Enter Username", id="username") }}
+        </div>
+
+        <label for="password"><b>Password</b></label>
+        <div class="input-group">
+            {{ form.password(class="form-control", placeholder="Enter Password", id="password") }}
+            <button type="button" class="btn btn-outline-secondary" onclick="togglePassword()">Show/Hide</button>
         </div>
 
         <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" checked="checked" name="remember" id="remember">
+            {{ form.remember(class="form-check-input", id="remember") }}
             <label class="form-check-label" for="remember">Remember me</label>
         </div>
 
-        <button type="submit" class="btn btn-success btn-block">Login</button>
+        {{ form.submit(class="btn btn-success btn-block btn-lg") }}
 
         <div class="text-center mt-3">
-            
             <span class="psw">New? <a href="{{ url_for('register') }}">Register here.</a></span>
         </div>
     </form>
 </div>
 
-<!-- Optional JavaScript; choose one of the two! -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+function togglePassword() {
+    const passwordField = document.getElementById('password');
+    const type = passwordField.type === 'password' ? 'text' : 'password';
+    passwordField.type = type;
+}
+</script>
 {% endblock %}

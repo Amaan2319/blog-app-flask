@@ -1,15 +1,25 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
-{% block title %}{{ article.title }}{% endblock %}  <!-- Title for the specific article -->
+{% block title %}Post {{ article.id }}{% endblock %}
 
 {% block content %}
-
-
-<div class="container my-4"> <!-- Bootstrap container with margin -->
-    <div class="article-container">
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center">
         <h1>{{ article.title }}</h1>
-        <p class="lead">{{ article.content }}</p>
-        <a href="/" class="btn btn-secondary">Back to Home</a> <!-- Button to return to home -->
+        <div class="update-btns">
+            {% if current_user.is_authenticated and article.author == current_user.username %}
+            <a href="{{ url_for('update', id=article.id) }}" class="btn btn-outline-warning float-right">Edit this post</a>
+            <a href="{{ url_for('delete', id=article.id) }}" class="btn btn-outline-danger float-left" onclick="return confirm('Are you sure you want to delete this post?')">Delete this post</a>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+    <p>By {{ article.author }} on {{ article.post_date.strftime('%Y-%m-%d %H:%M') }}</p>
+    {% if article.image_filename %}
+        <img src="{{ url_for('static', filename='uploads/' + article.image_filename) }}" alt="{{ article.title }}" class="img-fluid">
+    {% endif %}
+    <div class="content mt-4">
+        <p>{{ article.content }}</p>
     </div>
 </div>
 {% endblock %}
